@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DishTile extends StatelessWidget {
-  const DishTile({super.key, required this.name, required this.price});
+  const DishTile({super.key, required this.name, required this.price, required this.image});
 
   final String name;
   final double price;
+  final String image;
 
   String formatPrice(double price) {
     return '${price.toStringAsFixed(2)}€';
@@ -21,8 +22,7 @@ class DishTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Align(child: Icon(Icons.fastfood_rounded, size: 100,), alignment: Alignment.bottomCenter,),
-          SizedBox(height: 10,),
+          Image.asset(image, height: 120,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(

@@ -12,10 +12,12 @@ class BottomSheetTile extends StatefulWidget {
   final Restaurant restaurant;
   final List<Gericht> gerichtList;
   final int index;
+  final String image;
   final Function()? onAddButtonPressed;
   MyDatabase db = MyDatabase();
 
-  BottomSheetTile({ required this.restaurant, required this.gerichtList, required this.index, required this.onAddButtonPressed});
+  BottomSheetTile({ required this.restaurant, required this.gerichtList,
+    required this.index, required this.onAddButtonPressed, required this.image});
 
   @override
   State<BottomSheetTile> createState() => _BottomSheetTileState();
@@ -42,7 +44,7 @@ class _BottomSheetTileState extends State<BottomSheetTile> {
 
   void _decrease(){
     setState(() {
-      if (_amount > 0) {
+      if (_amount > 1) {
         _amount--;
       }
     });
@@ -60,7 +62,7 @@ class _BottomSheetTileState extends State<BottomSheetTile> {
     bool isAlreadySelected = false;
 
     for (Gericht gericht in selectedGerichte) {
-      if (gericht.dishName == widget.gerichtList[widget.index].dishName) { // Änderung: Vergleichen der Gerichtsnamen
+      if (gericht.dishName == widget.gerichtList[widget.index].dishName) {
         isAlreadySelected = true;
         break;
       }
@@ -88,6 +90,10 @@ class _BottomSheetTileState extends State<BottomSheetTile> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: Image.asset(widget.image, height: 200,),
+              ),
+              SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

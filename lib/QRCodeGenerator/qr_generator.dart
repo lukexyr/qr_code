@@ -35,7 +35,7 @@ class _GenerateQRCodeState extends State<QRGenerator> {
           children: [
             ElevatedButton(
               onPressed: () async {
-                String result = "-NnEfWiIDPlC1om8M-OP001";
+                String result = "-NnEh8RJxypXUB1Fl2w5001";
                 restaurant = new Restaurant(id: result.toString());
                 await database.getAllGerichte(restaurant);
                 _navigateToMenuDisplay(context);

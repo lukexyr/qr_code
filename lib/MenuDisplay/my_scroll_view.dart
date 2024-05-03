@@ -24,10 +24,18 @@ class _MyScrollViewState extends State<MyScrollView> {
   List<Gericht> fetchedGerichtList = [];
   MyDatabase db = MyDatabase();
 
+  List<String> assetList = [
+    'assets/images/burger-pommes.png',
+    'assets/images/fleisch.png',
+    'assets/images/salat.png',
+    'assets/images/pizza.png',
+  ];
+
   @override
   void initState() {
     super.initState();
     getData();
+    saveAssetList();
   }
 
   void getData() async {
@@ -48,6 +56,12 @@ class _MyScrollViewState extends State<MyScrollView> {
     setState(() {});
   }
 
+  void saveAssetList() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('assetList', assetList);
+  }
+
+
   void _showDishDetails(index) {
     showModalBottomSheet(
       context: context,
@@ -59,8 +73,9 @@ class _MyScrollViewState extends State<MyScrollView> {
               color: Colors.white,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
           ),
-          height: MediaQuery.of(context).size.height * 0.58,
-          child: BottomSheetTile(restaurant: widget.restaurant, gerichtList: gerichtList, index: index, onAddButtonPressed: _fetchAndUpdateList),
+          height: MediaQuery.of(context).size.height * 0.82,
+          child: BottomSheetTile(restaurant: widget.restaurant, gerichtList: gerichtList,
+              index: index, onAddButtonPressed: _fetchAndUpdateList, image: assetList[index],),
         );
       },
     );
@@ -83,7 +98,7 @@ class _MyScrollViewState extends State<MyScrollView> {
             final gericht = gerichtList[index];
             return GestureDetector(
               onTap: () => _showDishDetails(index),
-              child: DishTile(name: gericht.dishName, price: gericht.dishPrice),
+              child: DishTile(name: gericht.dishName, price: gericht.dishPrice, image: assetList[index],),
             );
           },
         ),

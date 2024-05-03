@@ -22,11 +22,13 @@ class _ShoppingCartTileState extends State<ShoppingCartTile> {
   MyDatabase db = MyDatabase();
   List<Gericht> fetchedGerichtList = [];
   double _promoValue = 3.00;
+  List<String> assetList = [];
 
   @override
   void initState() {
     super.initState();
     _pullData();
+    loadAssetList();
   }
 
   void _pullData() async {
@@ -67,6 +69,14 @@ class _ShoppingCartTileState extends State<ShoppingCartTile> {
     final prefs = await SharedPreferences.getInstance();
     final jsonStringList = prefs.getStringList('dishList') ?? [];
     return jsonStringList.map((jsonString) => Gericht.fromJson(jsonDecode(jsonString))).toList();
+  }
+
+  Future<void> loadAssetList() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedAssetList = prefs.getStringList('assetList') ?? [];
+    setState(() {
+      assetList = savedAssetList;
+    });
   }
 
   Future<void> saveObjectList(List<Gericht> list) async {
@@ -132,10 +142,7 @@ class _ShoppingCartTileState extends State<ShoppingCartTile> {
                           SizedBox(
                             width: 8,
                           ),
-                          Icon(
-                            Icons.circle_outlined,
-                            size: 80,
-                          ),
+                          Image.asset(assetList[fetchedGerichtList[index].index], height: 60,),
                           SizedBox(width: 16),
                           Expanded(
                             child: Padding(
